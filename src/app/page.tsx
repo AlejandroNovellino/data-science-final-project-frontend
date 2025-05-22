@@ -47,13 +47,15 @@ const FeatherRefresh: React.FC = () => (
 );
 
 type TabType = "single" | "batch";
+
 type SingleResultType = {
-  prediction: number[];
+  prediction: number;
   proba_1: number;
   proba_0: number;
 };
+
 type BatchResultType = {
-  predictions: number[];
+  predictions: SingleResultType[];
   total_predictions: number;
   file_name: string;
 };
@@ -214,7 +216,7 @@ function Home() {
 
   function renderSingleResult() {
     if (!singleResult) return null;
-    const pred = singleResult.prediction[0];
+    const pred = singleResult.prediction;
     const pc = singleResult.proba_1;
     const pnc = singleResult.proba_0;
     return (
@@ -245,10 +247,13 @@ function Home() {
   }
 
   function renderBatchResult() {
+
     if (!batchResult) return null;
+
     const preds = batchResult.predictions;
-    const cancelCount = preds.filter((p) => p === 1).length;
+    const cancelCount = preds.filter((p) => p.prediction === 1).length;
     const total = batchResult.total_predictions;
+
     return (
       <div className="result-card">
         <div className="result-title">
