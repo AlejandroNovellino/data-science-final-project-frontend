@@ -122,7 +122,7 @@ function Home() {
     ].forEach(f => { if (data[f]) data[f] = parseFloat(data[f]); });
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/predict", {
+      const response = await fetch('/api/proxy/predict', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -193,7 +193,7 @@ function Home() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/predict-from-file", {
+      const response = await fetch('/api/proxy/predict-from-file', {
         method: "POST",
         body: formData
       });
